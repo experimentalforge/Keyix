@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyix - Password Generator</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
+        #notification-banner { background-color: #28a745; color: white; padding: 10px; text-align: center; font-size: 0.9em; }
+        #notification-banner a { color: white; font-weight: bold; text-decoration: underline; }
+        header { display:flex; align-items:center; justify-content:space-between; background:#0077cc; color:white; padding:10px 20px; flex-wrap:wrap; }
+        header img { height:50px; max-height:60px; }
+        nav a { color:white; margin:0 10px; text-decoration:none; font-weight:bold; font-size:1em; }
+        nav a:hover { text-decoration:underline; }
+        .language { background:white; color:#0077cc; padding:5px 10px; border-radius:5px; font-weight:bold; cursor:pointer; margin-top:5px; }
+        main { padding:30px 20px; max-width:900px; margin:auto; text-align:center; }
+        h1 { color:#0077cc; font-size:2em; margin-bottom:20px; }
+        h2 { color:#333; margin-top:30px; }
+        select, button, input { padding:12px; margin:10px 0; font-size:18px; border-radius:5px; border:1px solid #ccc; }
+        button { cursor:pointer; background:linear-gradient(90deg,#0077cc,#005fa3); color:white; border:none; transition:0.3s; font-weight:bold; }
+        button:hover { background:linear-gradient(90deg,#005fa3,#003f70); }
+        input { width:80%; font-size:18px; padding:12px; margin-top:10px; border-radius:5px; border:1px solid #ccc; text-align:center; }
+        .level-category { display:flex; justify-content:center; gap:15px; flex-wrap:wrap; margin-bottom:15px; }
+        .page { display:none; }
+        .active { display:block; }
+        table { width:100%; border-collapse:collapse; margin-top:15px; font-size:1em; }
+        th, td { border:1px solid #ccc; padding:8px; text-align:left; }
+        th { background:#0077cc; color:white; }
+        ul, .guide-content p { margin-top:10px; line-height:1.6; font-size:1.1em; text-align:left; max-width:800px; margin-left:auto; margin-right:auto; }
+        .guide-content { text-align: left; }
+        footer { background:#222; color:white; padding:20px; font-size:0.9em; margin-top:40px; }
+        footer a { color:white; text-decoration:none; }
+        footer a:hover { text-decoration:underline; }
+        footer h4 { margin-bottom:8px; }
+        footer ul { list-style:none; padding:0; }
+        footer div.footer-columns { display:flex; flex-wrap:wrap; justify-content:center; max-width:900px; margin:auto; gap:40px; }
+        footer div.footer-columns > div { min-width:200px; margin-bottom:10px; text-align:center; }
+        footer div.footer-bottom { text-align:center; margin-top:15px; font-size:0.8em; color:#aaa; }
+        .top-buttons { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
+        
+        /* ========================== Responsive mobile =========================== */
+        @media (max-width:600px){
+            header { flex-direction:column; align-items:flex-start; }
+            nav { margin-left:0; margin-top:10px; }
+            nav a { display:inline-block; margin:5px 5px; font-size:0.9em; }
+            input, select, button { width:90%; font-size:16px; }
+            h1 { font-size:1.5em; }
+            .top-buttons { flex-direction:column; gap:10px; }
+            .level-category { flex-direction:column; gap:10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="notification-banner">
+    <span id="notification-text"></span>
+    <a id="notification-link" href="https://github.com/Experimentalforge/Keyix" target="_blank"></a>
+</div>
+
+<header>
+    <div style="display:flex; align-items:center; flex-wrap:wrap;">
+        <img src="logo.png" alt="Logo Keyix" onerror="this.style.display='none'">
+        <nav style="margin-left:20px; flex-wrap:wrap;">
+            <a href="#" id="nav-home" onclick="showPage('home')">Home</a>
+            <a href="#" id="nav-info" onclick="showPage('info')">Info</a>
+            <a href="#" id="nav-why" onclick="showPage('why')">Perché è utile</a>
+            <a href="#" id="nav-guide" onclick="showPage('guide')">Guida</a>
+        </nav>
+    </div>
+    <div>
+        <select id="language" class="language" onchange="updateLanguage()">
+            <option value="it">Italiano</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+</header>
+
+<main>
+    <!-- Home / Generatore -->
+    <div id="home" class="page active">
+        <h1 id="title-home">Keyix - Generatore di Password Creative</h1>
+        <div style="display:inline-block; text-align:center;">
+            <div class="level-category">
+                <div>
+                    <label for="level" id="label-level">Seleziona livello:</label><br>
+                    <select id="level"></select>
+                </div>
+                <div>
+                    <label for="category" id="label-category">Seleziona categoria:</label><br>
+                    <select id="category"></select>
+                </div>
+            </div>
+            <input type="text" id="password" readonly placeholder="La tua password apparirà qui">
+            <div class="top-buttons">
+                <button id="btn-generate" onclick="generatePassword()">Genera</button>
+                <button id="btn-copy" onclick="copyPassword()">📋 Copia</button>
+                <button id="btn-random" onclick="randomPassword()">🔄 Casuale</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info -->
+    <div id="info" class="page">
+        <h1 id="title-info">Livelli di sicurezza</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Livello</th>
+                    <th>Verbo</th>
+                    <th>Aggettivo</th>
+                    <th>Numeri</th>
+                    <th>Simboli</th>
+                    <th>Entropia (bits)</th>
+                    <th>Sicurezza (%)</th>
+                    <th>Tempo stimato hacker</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Base</td><td>No</td><td>No</td><td>1</td><td>1</td><td>28</td><td>1%</td><td>~10 giorni</td>
+                </tr>
+                <tr>
+                    <td>Medio</td><td>Sì</td><td>No</td><td>2</td><td>1</td><td>45</td><td>25%</td><td>~2 anni</td>
+                </tr>
+                <tr>
+                    <td>Avanzato</td><td>Sì</td><td>Sì</td><td>2</td><td>2</td><td>60</td><td>70%</td><td>~123 anni</td>
+                </tr>
+                <tr>
+                    <td>Ultra</td><td>Sì</td><td>Sì</td><td>3</td><td>2</td><td>72</td><td>99%</td><td>~123456 anni</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Perché è utile -->
+    <div id="why" class="page">
+        <h1 id="title-why">Perché usare password complesse</h1>
+        <ul id="why-list"></ul>
+    </div>
+
+    <!-- Guida -->
+    <div id="guide" class="page">
+        <h1 id="title-guide">Guida all'Uso</h1>
+        <div id="guide-content" class="guide-content"></div>
+    </div>
+</main>
+
+<footer>
+  <div class="footer-columns">
+    <div>
+      <h4 id="footer-links-title">Link utili</h4>
+      <ul id="footer-links-list">
+        <li><a href="https://experimentalforge.neocities.org/" target="_blank">Sito personale</a></li>
+        <li><a href="https://www.youtube.com/@Experimentalforge" target="_blank">YouTube @Experimentalforge</a></li>
+        <li><a href="https://experimentalforge.itch.io/" target="_blank">Itch.io</a></li>
+        <li><a id="footer-github-link" href="https://github.com/Experimentalforge/Keyix" target="_blank">Codice Sorgente (GitHub)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 Keyix - Tutti i diritti riservati
+  </div>
+</footer>
+
+<script>
+// =====================================
+// JS generatore, lingua e navigazione
+// =====================================
+let currentLang = "it";
+
+const data = {
+    it: {
+        ui: {
+            home: "Keyix - Generatore di Password Creative", info: "Livelli di sicurezza", why: "Perché usare password complesse", guide: "Guida all'Uso",
+            navHome: "Home", navInfo: "Info", navWhy: "Perché è utile", navGuide: "Guida",
+            labelLevel: "Seleziona livello:", labelCategory: "Seleziona categoria:",
+            btnGenerate: "Genera", btnCopy: "📋 Copia", btnRandom: "🔄 Casuale",
+            notificationText: "Keyix non salva nessuna password generata. Controlla il ", notificationLink: "codice sorgente su GitHub.",
+            footerLinksTitle: "Link utili", footerGithub: "Codice Sorgente (GitHub)",
+            whyList: ["Più difficile da indovinare per hacker", "Protegge dagli attacchi brute-force e dizionario", "Riduce il rischio di furto dati e account compromessi", "Permette di avere frasi memorabili ma sicure", "Evita il riuso di password su più siti", "Protegge email, social, conti bancari e dati sensibili", "Riduce il rischio domino se un sito viene violato", "Keyix **non tiene traccia** delle password generate: tutto resta sul tuo computer/browser"],
+            guideContent: [
+                { type: 'h2', text: 'Quando Usare Keyix?' },
+                { type: 'p', text: 'Usa Keyix ogni volta che devi creare una nuova password per un account online, come social media, email, home banking o qualsiasi altro servizio. L\'obiettivo è avere una password unica e robusta per ogni sito.' },
+                { type: 'h2', text: 'Come Scegliere il Livello Giusto?' },
+                { type: 'p', text: '<strong>Base:</strong> Veloce e facile da ricordare, adatta per siti a basso rischio (es. forum, blog). È meglio di una password comune, ma non usarla per account importanti.' },
+                { type: 'p', text: '<strong>Medio:</strong> Un buon equilibrio tra sicurezza e memorabilità. Ideale per la maggior parte degli account di uso quotidiano, come social media o servizi di streaming.' },
+                { type: 'p', text: '<strong>Avanzato:</strong> Altamente sicura. Usala per account critici che contengono dati sensibili, come il tuo account email principale, gestori di password o account finanziari.' },
+                { type: 'p', text: '<strong>Ultra:</strong> Massima sicurezza. Perfetta per account che richiedono la protezione più elevata in assoluto, come wallet di criptovalute o account con privilegi di amministratore.' }
+            ]
+        },
+        articles: ["Il", "Lo", "La", "I", "Gli", "Le", "Un", "Uno", "Una"],
+        categories: {
+            "Animali": { sust: ["cane", "gatto", "lupo", "cavallo", "topo", "coniglio", "uccello"], verbs: ["corre", "salta", "dorme", "miagola", "abbaia", "vola"], adjs: ["grande", "piccolo", "veloce", "lento", "luminoso"] },
+            "Natura": { sust: ["mare", "fiume", "luna", "sole", "albero", "fiore", "cielo"], verbs: ["scorre", "brilla", "vola", "cresce", "cade", "ondeggia"], adjs: ["grande", "piccolo", "luminoso", "oscuro", "alto"] },
+            "Oggetti": { sust: ["tavolo", "sedia", "porta", "casa", "libro", "penna", "ponte"], verbs: ["cade", "sta", "rotola", "brilla", "apre", "chiude", "vibra"], adjs: ["grande", "piccolo", "rosso", "blu", "luminoso"] },
+            "Fantasia": { sust: ["drago", "unicorno", "folletto", "strega", "castello", "nave", "cristallo"], verbs: ["vola", "incanta", "brilla", "scivola", "scompare", "ruggisce", "galoppa"], adjs: ["magico", "oscuro", "antico", "luminoso", "gigante"] }
+        },
+        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzato": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 } }
+    },
+    en: {
+        ui: {
+            home: "Keyix - Creative Password Generator", info: "Security Levels", why: "Why Use Strong Passwords", guide: "User Guide",
+            navHome: "Home", navInfo: "Info", navWhy: "Why it's useful", navGuide: "Guide",
+            labelLevel: "Select level:", labelCategory: "Select category:",
+            btnGenerate: "Generate", btnCopy: "📋 Copy", btnRandom: "🔄 Random",
+            notificationText: "Keyix does not save any generated passwords. Check the ", notificationLink: "source code on GitHub.",
+            footerLinksTitle: "Useful Links", footerGithub: "Source Code (GitHub)",
+            whyList: ["Harder for hackers to guess", "Protects against brute-force and dictionary attacks", "Reduces risk of data theft and compromised accounts", "Allows memorable yet secure phrases", "Prevents password reuse on multiple sites", "Protects emails, social, bank accounts, and sensitive data", "Reduces domino effect risk if a site is hacked", "Keyix **does NOT store** any password generated: everything stays on your computer/browser"],
+            guideContent: [
+                { type: 'h2', text: 'When to Use Keyix?' },
+                { type: 'p', text: 'Use Keyix every time you need to create a new password for an online account, such as social media, email, online banking, or any other service. The goal is to have a unique and robust password for each site.' },
+                { type: 'h2', text: 'How to Choose the Right Level?' },
+                { type: 'p', text: '<strong>Base:</strong> Quick and easy to remember, suitable for low-risk sites (e.g., forums, blogs). It\'s better than a common password, but don\'t use it for important accounts.' },
+                { type: 'p', text: '<strong>Medium:</strong> A good balance between security and memorability. Ideal for most everyday accounts, like social media or streaming services.' },
+                { type: 'p', text: '<strong>Advanced:</strong> Highly secure. Use it for critical accounts that contain sensitive data, such as your main email account, password managers, or financial accounts.' },
+                { type: 'p', text: '<strong>Ultra:</strong> Maximum security. Perfect for accounts that require the absolute highest level of protection, like cryptocurrency wallets or accounts with administrator privileges.' }
+            ]
+        },
+        articles: ["The", "A"],
+        categories: {
+            "Animals": { sust: ["dog", "cat", "wolf", "horse", "mouse", "rabbit", "bird"], verbs: ["runs", "jumps", "sleeps", "meows", "barks", "flies"], adjs: ["big", "small", "fast", "slow", "bright"] },
+            "Nature": { sust: ["sea", "river", "moon", "sun", "tree", "flower", "sky"], verbs: ["flows", "shines", "flies", "grows", "falls", "waves"], adjs: ["big", "small", "bright", "dark", "high"] },
+            "Objects": { sust: ["table", "chair", "door", "house", "book", "pen", "bridge"], verbs: ["falls", "stands", "rolls", "shines", "opens", "closes", "vibrates"], adjs: ["big", "small", "red", "blue", "bright"] },
+            "Fantasy": { sust: ["dragon", "unicorn", "sprite", "witch", "castle", "ship", "crystal"], verbs: ["flies", "enchants", "shines", "slides", "disappears", "roars", "gallops"], adjs: ["magic", "dark", "ancient", "bright", "giant"] }
+        },
+        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzato": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 } }
+    }
+};
+
+const levelSelect = document.getElementById("level");
+const categorySelect = document.getElementById("category");
+
+function updateDropdowns() {
+    levelSelect.innerHTML = "";
+    categorySelect.innerHTML = "";
+    Object.keys(data[currentLang].levels).forEach(l => { const opt = document.createElement("option"); opt.value = l; opt.text = l; levelSelect.add(opt); });
+    Object.keys(data[currentLang].categories).forEach(c => { const opt = document.createElement("option"); opt.value = c; opt.text = c; categorySelect.add(opt); });
+}
+
+function updateLanguage() {
+    currentLang = document.getElementById("language").value;
+    updateDropdowns();
+    
+    // Update UI text
+    const ui = data[currentLang].ui;
+    document.getElementById("title-home").textContent = ui.home;
+    document.getElementById("title-info").textContent = ui.info;
+    document.getElementById("title-why").textContent = ui.why;
+    document.getElementById("title-guide").textContent = ui.guide;
+    document.getElementById("nav-home").textContent = ui.navHome;
+    document.getElementById("nav-info").textContent = ui.navInfo;
+    document.getElementById("nav-why").textContent = ui.navWhy;
+    document.getElementById("nav-guide").textContent = ui.navGuide;
+    document.getElementById("label-level").textContent = ui.labelLevel;
+    document.getElementById("label-category").textContent = ui.labelCategory;
+    document.getElementById("btn-generate").textContent = ui.btnGenerate;
+    document.getElementById("btn-copy").textContent = ui.btnCopy;
+    document.getElementById("btn-random").textContent = ui.btnRandom;
+    document.getElementById("notification-text").textContent = ui.notificationText;
+    document.getElementById("notification-link").textContent = ui.notificationLink;
+    document.getElementById("footer-links-title").textContent = ui.footerLinksTitle;
+    document.getElementById("footer-github-link").textContent = ui.footerGithub;
+
+    // Update "Why" list
+    const whyList = document.getElementById("why-list");
+    whyList.innerHTML = "";
+    ui.whyList.forEach(item => { const li = document.createElement("li"); li.innerHTML = item; whyList.appendChild(li); });
+
+    // Update "Guide" content
+    const guideContent = document.getElementById("guide-content");
+    guideContent.innerHTML = "";
+    ui.guideContent.forEach(item => {
+        const el = document.createElement(item.type);
+        el.innerHTML = item.text;
+        guideContent.appendChild(el);
+    });
+
+    document.getElementById("password").placeholder = currentLang == "it" ? "La tua password apparirà qui" : "Your password will appear here";
+}
+
+function generatePassword() {
+    const lvl = levelSelect.value;
+    const cat = categorySelect.value;
+    const lvlData = data[currentLang].levels[lvl];
+    const catData = data[currentLang].categories[cat];
+    const arr = [];
+    
+    arr.push(randomChoice(data[currentLang].articles));
+    arr.push(randomChoice(catData.sust));
+    if (lvlData.verb) arr.push(randomChoice(catData.verbs));
+    if (lvlData.adj) arr.push(randomChoice(catData.adjs));
+    
+    const numAndSymbols = [];
+    for (let i = 0; i < lvlData.num; i++) numAndSymbols.push(String(Math.floor(Math.random() * 100)).padStart(2, '0'));
+    const symbols = "!@#$%^&*()-_=+[]{};:,.<>?/|";
+    for (let i = 0; i < lvlData.sym; i++) numAndSymbols.push(symbols[Math.floor(Math.random() * symbols.length)]);
+    
+    shuffleArray(numAndSymbols);
+
+    const finalPass = arr.join("") + numAndSymbols.join("");
+    document.getElementById("password").value = finalPass;
+}
+
+function randomPassword() {
+    const levels = Object.keys(data[currentLang].levels);
+    const cats = Object.keys(data[currentLang].categories);
+    levelSelect.value = randomChoice(levels);
+    categorySelect.value = randomChoice(cats);
+    generatePassword();
+}
+
+function copyPassword() {
+    const passInput = document.getElementById("password");
+    if (!passInput.value) return; 
+    
+    navigator.clipboard.writeText(passInput.value).then(() => {
+        const originalText = document.getElementById("btn-copy").innerHTML;
+        document.getElementById("btn-copy").textContent = currentLang === "it" ? "Copiata!" : "Copied!";
+        setTimeout(() => {
+            document.getElementById("btn-copy").innerHTML = originalText;
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy text: ', err);
+        // Fallback for older browsers
+        try {
+            passInput.select();
+            document.execCommand('copy');
+            const originalText = document.getElementById("btn-copy").innerHTML;
+            document.getElementById("btn-copy").textContent = currentLang === "it" ? "Copiata!" : "Copied!";
+            setTimeout(() => {
+                document.getElementById("btn-copy").innerHTML = originalText;
+            }, 2000);
+        } catch (e) {
+            console.error('Fallback copy failed', e);
+        }
+    });
+}
+
+
+function randomChoice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function showPage(id) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+// Initial load
+updateLanguage();
+</script>
+</body>
+</html>
