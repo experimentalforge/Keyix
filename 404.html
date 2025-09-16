@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Pagina non trovata</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff; /* sfondo bianco */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #333;
+        }
+        img {
+            max-width: 50%;
+            max-height: 50%;
+            margin-bottom: 20px;
+        }
+        #message {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <img src="404.png" alt="Chiave che piange">
+    <div id="message"></div>
+
+    <script>
+        // Frasi casuali
+        const phrases = [
+            "Ci pispiace per il problema!",
+            "Ops… qualcosa è andato storto!",
+            "La chiave sta piangendo 😢",
+            "Non trovi la pagina? Nemmeno noi!",
+            "Oops… prova a tornare indietro!",
+            "Questo posto è misteriosamente vuoto.",
+            "Errore! Ma almeno c’è la chiave che piange."
+        ];
+
+        // Seleziona una frase a caso
+        const randomIndex = Math.floor(Math.random() * phrases.length);
+        document.getElementById('message').textContent = phrases[randomIndex];
+    </script>
+</body>
+</html>
