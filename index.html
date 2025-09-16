@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="M-wXXj77lI5e9dwELSYhsCa9Nhs9CnZPUlcZx88maW0" />
-    <title>Keyix - Generatore di Password</title>
+    <title>Keyix - Password Generator</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="canonical" href="https://keyix.netlify.app/">
     <meta name="description" content="Keyix è un generatore di password creative, sicure e facili da ricordare. Crea password uniche per proteggere i tuoi account e dati sensibili.">
@@ -41,6 +41,15 @@
         footer div.footer-columns > div { min-width:200px; margin-bottom:10px; text-align:center; }
         footer div.footer-bottom { text-align:center; margin-top:15px; font-size:0.8em; color:#aaa; }
         .top-buttons { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; }
+        .blog-list { list-style: none; padding: 0; }
+        .blog-list li { background: #fff; margin-bottom: 15px; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: left; }
+        .blog-list li h3 { margin-top: 0; color: #0077cc; }
+        .blog-list li p.date { font-size: 0.9em; color: #666; margin-bottom: 10px; }
+        .blog-list li a.read-more { display: inline-block; background: #0077cc; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; transition: background 0.3s; }
+        .blog-list li a.read-more:hover { background: #005fa3; }
+        .blog-post-content { text-align: left; }
+        .blog-post-content img { max-width: 100%; height: auto; display: block; margin: 20px auto; border-radius: 8px; }
+        .blog-post-content button { margin-top: 20px; }
         
         /* ========================== Responsive mobile =========================== */
         @media (max-width:600px){
@@ -69,6 +78,7 @@
             <a href="#" id="nav-info" onclick="showPage('info')">Info</a>
             <a href="#" id="nav-why" onclick="showPage('why')">Perché è utile</a>
             <a href="#" id="nav-guide" onclick="showPage('guide')">Guida</a>
+            <a href="#" id="nav-blog" onclick="showPage('blog')">Blog</a>
         </nav>
     </div>
     <div>
@@ -134,7 +144,7 @@
                     <td>Ultra</td><td>Sì</td><td>Sì</td><td>3</td><td>2</td><td>72</td><td>99%</td><td>~123456 anni</td>
                 </tr>
                 <tr>
-                    <td>v.4</td><td>Sì</td><td>Sì</td><td>3</td><td>3</td><td>78</td><td>99.9%</td><td>~1 milione di anni</td>
+                    <td>v.4</td><td>Sì</td><td>Sì</td><td>4</td><td>2</td><td>80</td><td>99.9%</td><td>~1 milione di anni</td>
                 </tr>
             </tbody>
         </table>
@@ -151,23 +161,40 @@
         <h1 id="title-guide">Guida all'Uso</h1>
         <div id="guide-content" class="guide-content"></div>
     </div>
+    
+    <!-- Blog -->
+    <div id="blog" class="page">
+        <h1 id="title-blog">Blog - Consigli per la sicurezza</h1>
+        <p id="blog-description">
+            I contenuti del blog vengono caricati direttamente da questo file, senza collegamenti esterni. Per aggiungere un nuovo articolo, basta inserirlo nel codice JavaScript qui sotto.
+        </p>
+        <!-- Lista dei post -->
+        <div id="blog-list-container">
+            <ul id="blog-list" class="blog-list"></ul>
+        </div>
+        <!-- Pagina del singolo post (inizialmente nascosta) -->
+        <div id="blog-post-container" style="display: none;">
+            <button onclick="showPage('blog')">← Torna al blog</button>
+            <div id="blog-post-content" class="blog-post-content"></div>
+        </div>
+    </div>
 </main>
 
 <footer>
-  <div class="footer-columns">
-    <div>
-      <h4 id="footer-links-title">Link utili</h4>
-      <ul id="footer-links-list">
-        <li><a href="https://experimentalforge.neocities.org/" target="_blank">Sito personale</a></li>
-        <li><a href="https://www.youtube.com/@Experimentalforge" target="_blank">YouTube @Experimentalforge</a></li>
-        <li><a href="https://experimentalforge.itch.io/" target="_blank">Itch.io</a></li>
-        <li><a id="footer-github-link" href="https://github.com/Experimentalforge/Keyix" target="_blank">Codice Sorgente (GitHub)</a></li>
-      </ul>
+    <div class="footer-columns">
+        <div>
+            <h4 id="footer-links-title">Link utili</h4>
+            <ul id="footer-links-list">
+                <li><a href="https://experimentalforge.neocities.org/" target="_blank">Sito personale</a></li>
+                <li><a href="https://www.youtube.com/@Experimentalforge" target="_blank">YouTube @Experimentalforge</a></li>
+                <li><a href="https://experimentalforge.itch.io/" target="_blank">Itch.io</a></li>
+                <li><a id="footer-github-link" href="https://github.com/Experimentalforge/Keyix" target="_blank">Codice Sorgente (GitHub)</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
-  <div class="footer-bottom">
-    &copy; 2025 Keyix - Tutti i diritti riservati
-  </div>
+    <div class="footer-bottom">
+        &copy; 2025 Keyix - Tutti i diritti riservati
+    </div>
 </footer>
 
 <script>
@@ -179,49 +206,81 @@ let currentLang = "it";
 const data = {
     it: {
         ui: {
-            home: "Keyix - Generatore di Password Creative", info: "Livelli di sicurezza", why: "Perché usare password complesse", guide: "Guida all'Uso",
-            navHome: "Home", navInfo: "Info", navWhy: "Perché è utile", navGuide: "Guida",
+            home: "Keyix - Generatore di Password Creative", info: "Livelli di sicurezza", why: "Perché usare password complesse", guide: "Guida all'Uso", blog: "Blog - Consigli per la sicurezza",
+            navHome: "Home", navInfo: "Info", navWhy: "Perché è utile", navGuide: "Guida", navBlog: "Blog",
             labelLevel: "Seleziona livello:", labelCategory: "Seleziona categoria:",
             btnGenerate: "Genera", btnCopy: "📋 Copia", btnRandom: "🔄 Casuale",
             notificationText: "Keyix non salva nessuna password generata. Controlla il ", notificationLink: "codice sorgente su GitHub.",
             footerLinksTitle: "Link utili", footerGithub: "Codice Sorgente (GitHub)",
-            whyList: ["Rende le tue password quasi impossibili da indovinare per gli hacker.", "Ti protegge da attacchi 'brute-force' e 'dizionario'.", "Minimizza il rischio di furti di dati e di account violati.", "Ti aiuta a creare frasi facili da ricordare ma estremamente sicure.", "Ti spinge a usare una password unica per ogni sito, un passo fondamentale per la sicurezza online.", "Protegge i tuoi dati più importanti: email, social network, conti bancari e altre informazioni sensibili.", "Se un sito viene violato, una password unica impedisce che anche gli altri tuoi account siano a rischio.", "Keyix **non salva nessuna password generata**. Tutto rimane in locale, nel tuo browser."],
+            whyList: ["Più difficile da indovinare per hacker", "Protegge dagli attacchi a forza bruta e dizionario", "Riduce il rischio di furto dati e account compromessi", "Permette di avere frasi memorabili ma sicure", "Evita il riuso di password su più siti", "Protegge email, social, conti bancari e dati sensibili", "Riduce il rischio a cascata se un sito viene violato", "Keyix **non tiene traccia** delle password generate: tutto resta sul tuo computer/browser"],
             guideContent: [
                 { type: 'h2', text: 'Quando Usare Keyix?' },
-                { type: 'p', text: 'Usa Keyix ogni volta che crei un nuovo account online (social media, email, home banking) per garantirti una password unica e robusta.' },
+                { type: 'p', text: 'Usa Keyix ogni volta che devi creare una nuova password per un account online, come social media, email, home banking o qualsiasi altro servizio. L\'obiettivo è avere una password unica e robusta per ogni sito.' },
                 { type: 'h2', text: 'Come Scegliere il Livello Giusto?' },
-                { type: 'p', text: '<strong>Base:</strong> Ideale per siti a basso rischio (es. forum, blog). È veloce e facile da ricordare, ma non usare questo livello per account importanti.' },
-                { type: 'p', text: '<strong>Medio:</strong> Un buon equilibrio tra sicurezza e facilità di memorizzazione. Perfetto per la maggior parte degli account di uso quotidiano, come social media o servizi di streaming.' },
-                { type: 'p', text: '<strong>Avanzato:</strong> Molto sicura. Usa questo livello per i tuoi account più importanti, come l\'email principale, i gestori di password o i servizi finanziari.' },
-                { type: 'p', text: '<strong>Ultra:</strong> Massima sicurezza. Consigliato per account che richiedono la protezione più elevata in assoluto, come i wallet di criptovalute o account con privilegi da amministratore.' }
+                { type: 'p', text: '<strong>Base:</strong> Veloce e facile da ricordare, adatta per siti a basso rischio (es. forum, blog). È meglio di una password comune, ma non usarla per account importanti.' },
+                { type: 'p', text: '<strong>Medio:</strong> Un buon equilibrio tra sicurezza e memorabilità. Ideale per la maggior parte degli account di uso quotidiano, come social media o servizi di streaming.' },
+                { type: 'p', text: '<strong>Avanzato:</strong> Altamente sicura. Usala per account critici che contengono dati sensibili, come il tuo account email principale, gestori di password o account finanziari.' },
+                { type: 'p', text: '<strong>Ultra:</strong> Massima sicurezza. Perfetta per account che richiedono la protezione più elevata in assoluto, come wallet di criptovalute o account con privilegi di amministratore.' },
+                { type: 'p', text: '<strong>v.4:</strong> Nuova versione ancora più sicura, pensata per i professionisti della sicurezza e per proteggere dati di estrema importanza.' }
+            ],
+            blogDescription: "I contenuti del blog vengono caricati direttamente da questo file, senza collegamenti esterni. Per aggiungere un nuovo articolo, basta inserirlo nel codice JavaScript.",
+            blog: [
+                {
+                    title: "Perché usare una password per ogni sito?",
+                    date: "16 Settembre 2025",
+                    intro: "Molte persone usano la stessa password per diversi account per comodità. Ma questa abitudine è estremamente pericolosa...",
+                    content: "<span><p>Molte persone usano la stessa password per diversi account per comodità. Tuttavia, questa abitudine è estremamente pericolosa e ti espone a rischi enormi.</p> <p>Se una delle piattaforme che usi subisce una violazione dei dati, i cyber-criminali ottengono la tua password. E se questa password è la stessa che usi per la tua email, i tuoi social media o i tuoi conti bancari, rischierai che tutti i tuoi account vengano compromessi in un batter d'occhio. Questo è noto come 'attacco a cascata'.</p> <p>Usare password uniche per ogni servizio ti protegge da questo rischio. Anche se un sito viene violato, solo quell'account è a rischio, mentre tutti gli altri restano al sicuro. Keyix ti aiuta a creare password uniche che non dimenticherai.</p></span>"
+                },
+                {
+                    title: "Come funziona la forza delle password?",
+                    date: "10 Settembre 2025",
+                    intro: "La sicurezza di una password non dipende solo dalla sua lunghezza, ma dalla sua complessità e unicità...",
+                    content: "<span><p>La sicurezza di una password non dipende solo dalla sua lunghezza, ma dalla sua complessità e unicità. La forza di una password viene misurata in 'entropia', espressa in bit. Più bit ha una password, più tempo e potenza di calcolo serve a un hacker per decifrarla.</p> <p>Le password creative di Keyix, con la loro combinazione di frasi, numeri e simboli, aumentano notevolmente l'entropia rispetto a una password casuale o a una parola del dizionario. Questo le rende molto più resistenti agli attacchi a forza bruta e garantisce una protezione superiore per i tuoi dati.</p> <p>La chiave è l'imprevedibilità. Usando una frase, rendi la password più facile da ricordare per te, ma la sua combinazione con elementi casuali la rende quasi impossibile da indovinare per un computer.</p></span>"
+                }
             ]
         },
         articles: ["Il", "Lo", "La", "I", "Gli", "Le", "Un", "Uno", "Una"],
         categories: {
-            "Animali": { sust: ["cane", "gatto", "lupo", "cavallo", "topo", "coniglio", "uccello"], verbs: ["corre", "salta", "dorme", "miagola", "abbaia", "vola"], adjs: ["grande", "piccolo", "veloce", "lento", "luminoso"] },
-            "Natura": { sust: ["mare", "fiume", "luna", "sole", "albero", "fiore", "cielo"], verbs: ["scorre", "brilla", "vola", "cresce", "cade", "ondeggia"], adjs: ["grande", "piccolo", "luminoso", "oscuro", "alto"] },
-            "Oggetti": { sust: ["tavolo", "sedia", "porta", "casa", "libro", "penna", "ponte"], verbs: ["cade", "sta", "rotola", "brilla", "apre", "chiude", "vibra"], adjs: ["grande", "piccolo", "rosso", "blu", "luminoso"] },
-            "Fantasia": { sust: ["drago", "unicorno", "folletto", "strega", "castello", "nave", "cristallo"], verbs: ["vola", "incanta", "brilla", "scivola", "scompare", "ruggisce", "galoppa"], adjs: ["magico", "oscuro", "antico", "luminoso", "gigante"] }
+            "Animali": { sust: ["cane", "gatto", "lupo", "cavallo", "topo", "coniglio", "uccello"], verbs: ["corre", "salta", "dorme", "miagola", "abbaia", "vola"], adjs: ["grande", "piccolo", "veloce", "lento", "luminoso", "goloso"] },
+            "Natura": { sust: ["mare", "fiume", "luna", "sole", "albero", "fiore", "cielo"], verbs: ["scorre", "brilla", "vola", "cresce", "cade", "ondeggia", "mormora"], adjs: ["grande", "piccolo", "luminoso", "oscuro", "alto", "silenzioso"] },
+            "Oggetti": { sust: ["tavolo", "sedia", "porta", "casa", "libro", "penna", "ponte"], verbs: ["cade", "sta", "rotola", "brilla", "apre", "chiude", "vibra"], adjs: ["grande", "piccolo", "rosso", "blu", "luminoso", "vecchio"] },
+            "Fantasia": { sust: ["drago", "unicorno", "folletto", "strega", "castello", "nave", "cristallo"], verbs: ["vola", "incanta", "brilla", "scivola", "scompare", "ruggisce", "galoppa"], adjs: ["magico", "oscuro", "antico", "luminoso", "gigante", "potente"] }
         },
-        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzato": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 3, sym: 3 } }
+        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzato": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 4, sym: 2 } }
     },
     en: {
         ui: {
-            home: "Keyix - Creative Password Generator", info: "Security Levels", why: "Why Use Strong Passwords", guide: "User Guide",
-            navHome: "Home", navInfo: "Info", navWhy: "Why it's useful", navGuide: "Guide",
+            home: "Keyix - Creative Password Generator", info: "Security Levels", why: "Why Use Strong Passwords", guide: "User Guide", blog: "Blog - Security Tips",
+            navHome: "Home", navInfo: "Info", navWhy: "Why it's useful", navGuide: "Guide", navBlog: "Blog",
             labelLevel: "Select level:", labelCategory: "Select category:",
             btnGenerate: "Generate", btnCopy: "📋 Copy", btnRandom: "🔄 Random",
             notificationText: "Keyix does not save any generated passwords. Check the ", notificationLink: "source code on GitHub.",
             footerLinksTitle: "Useful Links", footerGithub: "Source Code (GitHub)",
-            whyList: ["Makes passwords nearly impossible for hackers to guess.", "Protects you from automated 'brute-force' and 'dictionary' attacks.", "Minimizes the risk of data theft and compromised accounts.", "Helps you create memorable but extremely secure phrases.", "Encourages you to use a unique password for each site, a key step for online security.", "Protects your most important data: emails, social networks, bank accounts, and other sensitive information.", "If one site is breached, a unique password prevents your other accounts from being at risk.", "Keyix **does NOT store any generated passwords**. Everything remains local on your browser."],
+            whyList: ["Harder for hackers to guess", "Protects against brute-force and dictionary attacks", "Reduces risk of data theft and compromised accounts", "Allows memorable yet secure phrases", "Prevents password reuse on multiple sites", "Protects emails, social, bank accounts, and sensitive data", "Reduces domino effect risk if a site is hacked", "Keyix **does NOT store** any password generated: everything stays on your computer/browser"],
             guideContent: [
                 { type: 'h2', text: 'When to Use Keyix?' },
-                { type: 'p', text: 'Use Keyix every time you create a new online account (social media, email, online banking) to ensure you have a unique and robust password.' },
+                { type: 'p', text: 'Use Keyix every time you need to create a new password for an online account, such as social media, email, online banking, or any other service. The goal is to have a unique and robust password for each site.' },
                 { type: 'h2', text: 'How to Choose the Right Level?' },
-                { type: 'p', text: '<strong>Base:</strong> Ideal for low-risk sites (e.g., forums, blogs). It\'s quick and easy to remember, but do not use this level for important accounts.' },
-                { type: 'p', text: '<strong>Medium:</strong> A good balance between security and memorability. Perfect for most everyday accounts, like social media or streaming services.' },
-                { type: 'p', text: '<strong>Advanced:</strong> Very secure. Use this level for your most critical accounts, such as your main email, password managers, or financial services.' },
-                { type: 'p', text: '<strong>Ultra:</strong> Maximum security. Recommended for accounts that require the absolute highest level of protection, like cryptocurrency wallets or accounts with administrator privileges.' }
+                { type: 'p', text: '<strong>Base:</strong> Quick and easy to remember, suitable for low-risk sites (e.g., forums, blogs). It\'s better than a common password, but don\'t use it for important accounts.' },
+                { type: 'p', text: '<strong>Medium:</strong> A good balance between security and memorability. Ideal for most everyday accounts, like social media or streaming services.' },
+                { type: 'p', text: '<strong>Advanced:</strong> Highly secure. Use it for critical accounts that contain sensitive data, such as your main email account, password managers, or financial accounts.' },
+                { type: 'p', text: '<strong>Ultra:</strong> Maximum security. Perfect for accounts that require the absolute highest level of protection, like cryptocurrency wallets or accounts with administrator privileges.' },
+                { type: 'p', text: '<strong>v.4:</strong> New, even more secure version, designed for security professionals and to protect extremely important data.' }
+            ],
+            blogDescription: "Blog content is loaded directly from this file, with no external links. To add a new article, simply insert it into the JavaScript code.",
+            blog: [
+                {
+                    title: "Why use a unique password for every site?",
+                    date: "September 16, 2025",
+                    intro: "Many people use the same password for multiple accounts for convenience. But this habit is extremely dangerous...",
+                    content: "<span><p>Many people use the same password for multiple accounts for convenience. However, this habit is extremely dangerous and exposes you to enormous risks.</p> <p>If one of the platforms you use suffers a data breach, cybercriminals get your password. And if this password is the same one you use for your email, social media, or bank accounts, you risk all your accounts being compromised in the blink of an eye. This is known as a 'domino effect attack.'</p> <p>Using unique passwords for each service protects you from this risk. Even if one site is breached, only that account is at risk, while all others remain safe. Keyix helps you create unique passwords you won't forget.</p></span>"
+                },
+                {
+                    title: "How does password strength work?",
+                    date: "September 10, 2025",
+                    intro: "The security of a password doesn't just depend on its length, but on its complexity and uniqueness...",
+                    content: "<span><p>The security of a password doesn't just depend on its length, but on its complexity and uniqueness. The strength of a password is measured in 'entropy', expressed in bits. The more bits a password has, the more time and computing power it takes for a hacker to crack it.</p> <p>Keyix's creative passwords, with their combination of phrases, numbers, and symbols, significantly increase entropy compared to a random password or a dictionary word. This makes them much more resistant to brute-force attacks and ensures superior protection for your data.</p> <p>The key is unpredictability. By using a phrase, you make the password easier for you to remember, but its combination with random elements makes it almost impossible for a computer to guess.</p></span>"
+                }
             ]
         },
         articles: ["The", "A"],
@@ -231,78 +290,60 @@ const data = {
             "Objects": { sust: ["table", "chair", "door", "house", "book", "pen", "bridge"], verbs: ["falls", "stands", "rolls", "shines", "opens", "closes", "vibrates"], adjs: ["big", "small", "red", "blue", "bright"] },
             "Fantasy": { sust: ["dragon", "unicorn", "sprite", "witch", "castle", "ship", "crystal"], verbs: ["flies", "enchants", "shines", "slides", "disappears", "roars", "gallops"], adjs: ["magic", "dark", "ancient", "bright", "giant"] }
         },
-        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medium": { verb: true, adj: false, num: 2, sym: 1 }, "Advanced": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 3, sym: 3 } }
+        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzato": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 4, sym: 2 } }
     },
     es: {
         ui: {
-            home: "Keyix - Generador de Contraseñas Creativas", info: "Niveles de seguridad", why: "Por qué usar contraseñas fuertes", guide: "Guía de uso",
-            navHome: "Inicio", navInfo: "Info", navWhy: "Por qué es útil", navGuide: "Guía",
+            home: "Keyix - Generador de Contraseñas Creativas", info: "Niveles de seguridad", why: "¿Por qué usar contraseñas complejas?", guide: "Guía de uso", blog: "Blog - Consejos de seguridad",
+            navHome: "Inicio", navInfo: "Info", navWhy: "Por qué es útil", navGuide: "Guía", navBlog: "Blog",
             labelLevel: "Seleccionar nivel:", labelCategory: "Seleccionar categoría:",
             btnGenerate: "Generar", btnCopy: "📋 Copiar", btnRandom: "🔄 Aleatorio",
-            notificationText: "Keyix no guarda ninguna contraseña generada. Comprueba el ", notificationLink: "código fuente en GitHub.",
+            notificationText: "Keyix no guarda ninguna de las contraseñas generadas. Revisa el ", notificationLink: "código fuente en GitHub.",
             footerLinksTitle: "Enlaces útiles", footerGithub: "Código Fuente (GitHub)",
-            whyList: ["Hace que tus contraseñas sean casi imposibles de adivinar para los hackers.", "Te protege de ataques automatizados de 'fuerza bruta' y 'diccionario'.", "Minimiza el riesgo de robo de datos y cuentas comprometidas.", "Te ayuda a crear frases fáciles de recordar pero extremadamente seguras.", "Te anima a usar una contraseña única para cada sitio, un paso clave para la seguridad en línea.", "Protege tus datos más importantes: correos electrónicos, redes sociales, cuentas bancarias y otra información sensible.", "Si un sitio se ve comprometido, una contraseña única evita que tus otras cuentas estén en riesgo.", "Keyix **NO almacena ninguna de las contraseñas generadas**. Todo permanece localmente en tu navegador."],
+            whyList: ["Más difícil de adivinar para los hackers", "Protege contra ataques de fuerza bruta y de diccionario", "Reduce el riesgo de robo de datos y cuentas comprometidas", "Permite tener frases memorables pero seguras", "Evita la reutilización de contraseñas en varios sitios", "Protege correos electrónicos, redes sociales, cuentas bancarias y datos sensibles", "Reduce el riesgo de efecto dominó si un sitio es hackeado", "Keyix **NO almacena** ninguna contraseña generada: todo se queda en tu ordenador/navegador"],
             guideContent: [
                 { type: 'h2', text: '¿Cuándo usar Keyix?' },
-                { type: 'p', text: 'Usa Keyix cada vez que crees una nueva cuenta en línea (redes sociales, correo electrónico, banca en línea) para asegurarte de tener una contraseña única y robusta.' },
+                { type: 'p', text: 'Usa Keyix cada vez que necesites crear una nueva contraseña para una cuenta en línea, como redes sociales, correo electrónico, banca en línea o cualquier otro servicio. El objetivo es tener una contraseña única y robusta para cada sitio.' },
                 { type: 'h2', text: '¿Cómo elegir el nivel correcto?' },
-                { type: 'p', text: '<strong>Base:</strong> Ideal para sitios de bajo riesgo (ej. foros, blogs). Es rápido y fácil de recordar, pero no uses este nivel para cuentas importantes.' },
-                { type: 'p', text: '<strong>Medio:</strong> Un buen equilibrio entre seguridad y facilidad de memorización. Perfecto para la mayoría de las cuentas de uso diario, como redes sociales o servicios de streaming.' },
-                { type: 'p', text: '<strong>Avanzado:</strong> Muy segura. Usa este nivel para tus cuentas más importantes, como tu correo electrónico principal, gestores de contraseñas o servicios financieros.' },
-                { type: 'p', text: '<strong>Ultra:</strong> Máxima seguridad. Recomendado para cuentas que requieren el nivel de protección más alto, como carteras de criptomonedas o cuentas con privilegios de administrador.' }
+                { type: 'p', text: '<strong>Básico:</strong> Rápido y fácil de recordar, adecuado para sitios de bajo riesgo (por ejemplo, foros, blogs). Es mejor que una contraseña común, pero no la uses para cuentas importantes.' },
+                { type: 'p', text: '<strong>Medio:</strong> Un buen equilibrio entre seguridad y facilidad de recordar. Ideal para la mayoría de las cuentas de uso diario, como redes sociales o servicios de streaming.' },
+                { type: 'p', text: '<strong>Avanzado:</strong> Muy seguro. Úsalo para cuentas críticas que contengan datos sensibles, como tu cuenta de correo electrónico principal, gestores de contraseñas o cuentas financieras.' },
+                { type: 'p', text: '<strong>Ultra:</strong> Máxima seguridad. Perfecto para cuentas que requieren el nivel más alto de protección, como carteras de criptomonedas o cuentas con privilegios de administrador.' },
+                { type: 'p', text: '<strong>v.4:</strong> Una nueva versión aún más segura, diseñada para profesionales de la seguridad y para proteger datos de extrema importancia.' }
+            ],
+            blogDescription: "El contenido del blog se carga directamente desde este archivo, sin enlaces externos. Para agregar un nuevo artículo, simplemente insértalo en el código JavaScript.",
+            blog: [
+                {
+                    title: "¿Por qué usar una contraseña única para cada sitio?",
+                    date: "16 de Septiembre de 2025",
+                    intro: "Mucha gente usa la misma contraseña para varias cuentas por conveniencia. Pero este hábito es extremadamente peligroso...",
+                    content: "<span><p>Mucha gente usa la misma contraseña para varias cuentas por conveniencia. Sin embargo, este hábito es extremadamente peligroso y te expone a enormes riesgos.</p> <p>Si una de las plataformas que utilizas sufre una brecha de datos, los ciberdelincuentes obtienen tu contraseña. Y si esta contraseña es la misma que usas para tu correo electrónico, tus redes sociales o tus cuentas bancarias, corres el riesgo de que todas tus cuentas se vean comprometidas en un abrir y cerrar de ojos. Esto se conoce como 'ataque en cascada'.</p> <p>El uso de contraseñas únicas para cada servicio te protege de este riesgo. Incluso si un sitio es vulnerado, solo esa cuenta está en riesgo, mientras que todas las demás permanecen seguras. Keyix te ayuda a crear contraseñas únicas que no olvidarás.</p></span>"
+                },
+                {
+                    title: "¿Cómo funciona la fuerza de las contraseñas?",
+                    date: "10 de Septiembre de 2025",
+                    intro: "La seguridad de una contraseña no solo depende de su longitud, sino de su complejidad y singularidad...",
+                    content: "<span><p>La seguridad de una contraseña no solo depende de su longitud, sino de su complejidad y singularidad. La fuerza de una contraseña se mide en 'entropía', expresada en bits. Cuantos más bits tenga una contraseña, más tiempo y poder de cálculo necesitará un hacker para descifrarla.</p> <p>Las contraseñas creativas de Keyix, con su combinación de frases, números y símbolos, aumentan notablemente la entropía en comparación con una contraseña aleatoria o una palabra del diccionario. Esto las hace mucho más resistentes a los ataques de fuerza bruta y garantiza una protección superior para tus datos.</p> <p>La clave es la imprevisibilidad. Al usar una frase, haces que la contraseña sea más fácil de recordar para ti, pero su combinación con elementos aleatorios la hace casi imposible de adivinar para un ordenador.</p></span>"
+                }
             ]
         },
-        articles: ["El", "Un", "La", "Una"],
+        articles: ["El", "Un", "La", "Una", "Los", "Las"],
         categories: {
             "Animales": { sust: ["perro", "gato", "lobo", "caballo", "ratón", "conejo", "pájaro"], verbs: ["corre", "salta", "duerme", "maúlla", "ladra", "vuela"], adjs: ["grande", "pequeño", "rápido", "lento", "brillante"] },
             "Naturaleza": { sust: ["mar", "río", "luna", "sol", "árbol", "flor", "cielo"], verbs: ["fluye", "brilla", "vuela", "crece", "cae", "ondea"], adjs: ["grande", "pequeño", "brillante", "oscuro", "alto"] },
             "Objetos": { sust: ["mesa", "silla", "puerta", "casa", "libro", "pluma", "puente"], verbs: ["cae", "está", "rueda", "brilla", "abre", "cierra", "vibra"], adjs: ["grande", "pequeño", "rojo", "azul", "brillante"] },
             "Fantasía": { sust: ["dragón", "unicornio", "duende", "bruja", "castillo", "barco", "cristal"], verbs: ["vuela", "encanta", "brilla", "se desliza", "desaparece", "ruge", "galopa"], adjs: ["mágico", "oscuro", "antiguo", "brillante", "gigante"] }
         },
-        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzado": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 3, sym: 3 } }
+        levels: { "Básico": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzado": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 4, sym: 2 } }
     }
 };
 
 const levelSelect = document.getElementById("level");
 const categorySelect = document.getElementById("category");
-const tableBody = document.querySelector("#info table tbody");
-
-const securityData = {
-    it: [
-        { level: "Base", verb: "No", adj: "No", num: "1", sym: "1", entropy: "28", security: "1%", time: "~10 giorni" },
-        { level: "Medio", verb: "Sì", adj: "No", num: "2", sym: "1", entropy: "45", security: "25%", time: "~2 anni" },
-        { level: "Avanzato", verb: "Sì", adj: "Sì", num: "2", sym: "2", entropy: "60", security: "70%", time: "~123 anni" },
-        { level: "Ultra", verb: "Sì", adj: "Sì", num: "3", sym: "2", entropy: "72", security: "99%", time: "~123456 anni" },
-        { level: "v.4", verb: "Sì", adj: "Sì", num: "3", sym: "3", entropy: "78", security: "99.9%", time: "~1 milione di anni" }
-    ],
-    en: [
-        { level: "Base", verb: "No", adj: "No", num: "1", sym: "1", entropy: "28", security: "1%", time: "~10 days" },
-        { level: "Medium", verb: "Yes", adj: "No", num: "2", sym: "1", entropy: "45", security: "25%", time: "~2 years" },
-        { level: "Advanced", verb: "Yes", adj: "Yes", num: "2", sym: "2", entropy: "60", security: "70%", time: "~123 years" },
-        { level: "Ultra", verb: "Yes", adj: "Yes", num: "3", sym: "2", entropy: "72", security: "99%", time: "~123456 years" },
-        { level: "v.4", verb: "Yes", adj: "Yes", num: "3", sym: "3", entropy: "78", security: "99.9%", time: "~1 million years" }
-    ],
-    es: [
-        { level: "Base", verb: "No", adj: "No", num: "1", sym: "1", entropy: "28", security: "1%", time: "~10 días" },
-        { level: "Medio", verb: "Sí", adj: "No", num: "2", sym: "1", entropy: "45", security: "25%", time: "~2 años" },
-        { level: "Avanzado", verb: "Sí", adj: "Sí", num: "2", sym: "2", entropy: "60", security: "70%", time: "~123 años" },
-        { level: "Ultra", verb: "Sí", adj: "Sí", num: "3", sym: "2", entropy: "72", security: "99%", time: "~123456 años" },
-        { level: "v.4", verb: "Sí", adj: "Sí", num: "3", sym: "3", entropy: "78", security: "99.9%", time: "~1 millón de años" }
-    ]
-};
-
-function updateTable() {
-    tableBody.innerHTML = "";
-    securityData[currentLang].forEach(row => {
-        const tr = document.createElement("tr");
-        Object.values(row).forEach(text => {
-            const td = document.createElement("td");
-            td.textContent = text;
-            tr.appendChild(td);
-        });
-        tableBody.appendChild(tr);
-    });
-}
+const blogListContainer = document.getElementById("blog-list-container");
+const blogPostContainer = document.getElementById("blog-post-container");
+const blogPostContent = document.getElementById("blog-post-content");
+const blogList = document.getElementById("blog-list");
 
 function updateDropdowns() {
     levelSelect.innerHTML = "";
@@ -311,10 +352,26 @@ function updateDropdowns() {
     Object.keys(data[currentLang].categories).forEach(c => { const opt = document.createElement("option"); opt.value = c; opt.text = c; categorySelect.add(opt); });
 }
 
+function updateBlog() {
+    blogList.innerHTML = "";
+    data[currentLang].ui.blog.forEach((post, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<h3>${post.title}</h3><p class="date">${post.date}</p><p>${post.intro}</p><a href="#" class="read-more" onclick="showBlogPost(${index})">Leggi di più →</a>`;
+        blogList.appendChild(li);
+    });
+}
+
+function showBlogPost(index) {
+    const post = data[currentLang].ui.blog[index];
+    blogPostContent.innerHTML = `<h2>${post.title}</h2><p class="date">${post.date}</p>${post.content}`;
+    blogListContainer.style.display = "none";
+    blogPostContainer.style.display = "block";
+}
+
 function updateLanguage() {
     currentLang = document.getElementById("language").value;
     updateDropdowns();
-    updateTable(); // Aggiorna la tabella
+    updateBlog();
 
     // Update UI text
     const ui = data[currentLang].ui;
@@ -322,10 +379,12 @@ function updateLanguage() {
     document.getElementById("title-info").textContent = ui.info;
     document.getElementById("title-why").textContent = ui.why;
     document.getElementById("title-guide").textContent = ui.guide;
+    document.getElementById("title-blog").textContent = ui.blog;
     document.getElementById("nav-home").textContent = ui.navHome;
     document.getElementById("nav-info").textContent = ui.navInfo;
     document.getElementById("nav-why").textContent = ui.navWhy;
     document.getElementById("nav-guide").textContent = ui.navGuide;
+    document.getElementById("nav-blog").textContent = ui.navBlog;
     document.getElementById("label-level").textContent = ui.labelLevel;
     document.getElementById("label-category").textContent = ui.labelCategory;
     document.getElementById("btn-generate").textContent = ui.btnGenerate;
@@ -335,6 +394,7 @@ function updateLanguage() {
     document.getElementById("notification-link").textContent = ui.notificationLink;
     document.getElementById("footer-links-title").textContent = ui.footerLinksTitle;
     document.getElementById("footer-github-link").textContent = ui.footerGithub;
+    document.getElementById("blog-description").textContent = ui.blogDescription;
 
     // Update "Why" list
     const whyList = document.getElementById("why-list");
@@ -358,31 +418,21 @@ function generatePassword() {
     const cat = categorySelect.value;
     const lvlData = data[currentLang].levels[lvl];
     const catData = data[currentLang].categories[cat];
-    const passwordParts = [];
+    const arr = [];
     
-    // Scelta casuale delle parole in base al livello e categoria
-    if (lvlData.adj) {
-      passwordParts.push(randomChoice(catData.adjs));
-    }
-    passwordParts.push(randomChoice(catData.sust));
-    if (lvlData.verb) {
-      passwordParts.push(randomChoice(catData.verbs));
-    }
-    passwordParts.push(randomChoice(data[currentLang].articles));
+    arr.push(randomChoice(data[currentLang].articles));
+    arr.push(randomChoice(catData.sust));
+    if (lvlData.verb) arr.push(randomChoice(catData.verbs));
+    if (lvlData.adj) arr.push(randomChoice(catData.adjs));
     
-    // Aggiungi numeri e simboli
     const numAndSymbols = [];
-    for (let i = 0; i < lvlData.num; i++) {
-        numAndSymbols.push(String(Math.floor(Math.random() * 100)).padStart(2, '0'));
-    }
+    for (let i = 0; i < lvlData.num; i++) numAndSymbols.push(String(Math.floor(Math.random() * 100)).padStart(2, '0'));
     const symbols = "!@#$%^&*()-_=+[]{};:,.<>?/|";
-    for (let i = 0; i < lvlData.sym; i++) {
-        numAndSymbols.push(symbols[Math.floor(Math.random() * symbols.length)]);
-    }
+    for (let i = 0; i < lvlData.sym; i++) numAndSymbols.push(symbols[Math.floor(Math.random() * symbols.length)]);
+    
     shuffleArray(numAndSymbols);
 
-    // Unisci tutti i componenti
-    const finalPass = passwordParts.join("") + numAndSymbols.join("");
+    const finalPass = arr.join("") + numAndSymbols.join("");
     document.getElementById("password").value = finalPass;
 }
 
@@ -397,26 +447,28 @@ function randomPassword() {
 function copyPassword() {
     const passInput = document.getElementById("password");
     if (!passInput.value) return; 
-
-    // Use a temporary textarea for a more reliable copy on all browsers
-    const tempTextarea = document.createElement('textarea');
-    tempTextarea.value = passInput.value;
-    document.body.appendChild(tempTextarea);
-    tempTextarea.select();
-    tempTextarea.setSelectionRange(0, 99999); // For mobile devices
-
-    try {
-        document.execCommand('copy');
+    
+    navigator.clipboard.writeText(passInput.value).then(() => {
         const originalText = document.getElementById("btn-copy").innerHTML;
         document.getElementById("btn-copy").textContent = currentLang === "it" ? "Copiata!" : "Copied!";
         setTimeout(() => {
             document.getElementById("btn-copy").innerHTML = originalText;
         }, 2000);
-    } catch (err) {
+    }).catch(err => {
         console.error('Failed to copy text: ', err);
-    } finally {
-        document.body.removeChild(tempTextarea);
-    }
+        // Fallback for older browsers
+        try {
+            passInput.select();
+            document.execCommand('copy');
+            const originalText = document.getElementById("btn-copy").innerHTML;
+            document.getElementById("btn-copy").textContent = currentLang === "it" ? "Copiata!" : "Copied!";
+            setTimeout(() => {
+                document.getElementById("btn-copy").innerHTML = originalText;
+            }, 2000);
+        } catch (e) {
+            console.error('Fallback copy failed', e);
+        }
+    });
 }
 
 
@@ -432,6 +484,10 @@ function shuffleArray(array) {
 function showPage(id) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById(id).classList.add("active");
+    if (id === "blog") {
+        blogListContainer.style.display = "block";
+        blogPostContainer.style.display = "none";
+    }
 }
 
 // Initial load
