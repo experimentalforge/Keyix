@@ -75,6 +75,7 @@
         <select id="language" class="language" onchange="updateLanguage()">
             <option value="it">Italiano</option>
             <option value="en">English</option>
+            <option value="es">Español</option>
         </select>
     </div>
 </header>
@@ -131,6 +132,9 @@
                 </tr>
                 <tr>
                     <td>Ultra</td><td>Sì</td><td>Sì</td><td>3</td><td>2</td><td>72</td><td>99%</td><td>~123456 anni</td>
+                </tr>
+                <tr>
+                    <td>v.4</td><td>Sì</td><td>Sì</td><td>3</td><td>3</td><td>78</td><td>99.9%</td><td>~1 milione di anni</td>
                 </tr>
             </tbody>
         </table>
@@ -199,7 +203,7 @@ const data = {
             "Oggetti": { sust: ["tavolo", "sedia", "porta", "casa", "libro", "penna", "ponte"], verbs: ["cade", "sta", "rotola", "brilla", "apre", "chiude", "vibra"], adjs: ["grande", "piccolo", "rosso", "blu", "luminoso"] },
             "Fantasia": { sust: ["drago", "unicorno", "folletto", "strega", "castello", "nave", "cristallo"], verbs: ["vola", "incanta", "brilla", "scivola", "scompare", "ruggisce", "galoppa"], adjs: ["magico", "oscuro", "antico", "luminoso", "gigante"] }
         },
-        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzato": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 } }
+        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzato": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 3, sym: 3 } }
     },
     en: {
         ui: {
@@ -227,7 +231,35 @@ const data = {
             "Objects": { sust: ["table", "chair", "door", "house", "book", "pen", "bridge"], verbs: ["falls", "stands", "rolls", "shines", "opens", "closes", "vibrates"], adjs: ["big", "small", "red", "blue", "bright"] },
             "Fantasy": { sust: ["dragon", "unicorn", "sprite", "witch", "castle", "ship", "crystal"], verbs: ["flies", "enchants", "shines", "slides", "disappears", "roars", "gallops"], adjs: ["magic", "dark", "ancient", "bright", "giant"] }
         },
-        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medium": { verb: true, adj: false, num: 2, sym: 1 }, "Advanced": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 } }
+        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medium": { verb: true, adj: false, num: 2, sym: 1 }, "Advanced": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 3, sym: 3 } }
+    },
+    es: {
+        ui: {
+            home: "Keyix - Generador de Contraseñas Creativas", info: "Niveles de seguridad", why: "Por qué usar contraseñas fuertes", guide: "Guía de uso",
+            navHome: "Inicio", navInfo: "Info", navWhy: "Por qué es útil", navGuide: "Guía",
+            labelLevel: "Seleccionar nivel:", labelCategory: "Seleccionar categoría:",
+            btnGenerate: "Generar", btnCopy: "📋 Copiar", btnRandom: "🔄 Aleatorio",
+            notificationText: "Keyix no guarda ninguna contraseña generada. Comprueba el ", notificationLink: "código fuente en GitHub.",
+            footerLinksTitle: "Enlaces útiles", footerGithub: "Código Fuente (GitHub)",
+            whyList: ["Hace que tus contraseñas sean casi imposibles de adivinar para los hackers.", "Te protege de ataques automatizados de 'fuerza bruta' y 'diccionario'.", "Minimiza el riesgo de robo de datos y cuentas comprometidas.", "Te ayuda a crear frases fáciles de recordar pero extremadamente seguras.", "Te anima a usar una contraseña única para cada sitio, un paso clave para la seguridad en línea.", "Protege tus datos más importantes: correos electrónicos, redes sociales, cuentas bancarias y otra información sensible.", "Si un sitio se ve comprometido, una contraseña única evita que tus otras cuentas estén en riesgo.", "Keyix **NO almacena ninguna de las contraseñas generadas**. Todo permanece localmente en tu navegador."],
+            guideContent: [
+                { type: 'h2', text: '¿Cuándo usar Keyix?' },
+                { type: 'p', text: 'Usa Keyix cada vez que crees una nueva cuenta en línea (redes sociales, correo electrónico, banca en línea) para asegurarte de tener una contraseña única y robusta.' },
+                { type: 'h2', text: '¿Cómo elegir el nivel correcto?' },
+                { type: 'p', text: '<strong>Base:</strong> Ideal para sitios de bajo riesgo (ej. foros, blogs). Es rápido y fácil de recordar, pero no uses este nivel para cuentas importantes.' },
+                { type: 'p', text: '<strong>Medio:</strong> Un buen equilibrio entre seguridad y facilidad de memorización. Perfecto para la mayoría de las cuentas de uso diario, como redes sociales o servicios de streaming.' },
+                { type: 'p', text: '<strong>Avanzado:</strong> Muy segura. Usa este nivel para tus cuentas más importantes, como tu correo electrónico principal, gestores de contraseñas o servicios financieros.' },
+                { type: 'p', text: '<strong>Ultra:</strong> Máxima seguridad. Recomendado para cuentas que requieren el nivel de protección más alto, como carteras de criptomonedas o cuentas con privilegios de administrador.' }
+            ]
+        },
+        articles: ["El", "Un", "La", "Una"],
+        categories: {
+            "Animales": { sust: ["perro", "gato", "lobo", "caballo", "ratón", "conejo", "pájaro"], verbs: ["corre", "salta", "duerme", "maúlla", "ladra", "vuela"], adjs: ["grande", "pequeño", "rápido", "lento", "brillante"] },
+            "Naturaleza": { sust: ["mar", "río", "luna", "sol", "árbol", "flor", "cielo"], verbs: ["fluye", "brilla", "vuela", "crece", "cae", "ondea"], adjs: ["grande", "pequeño", "brillante", "oscuro", "alto"] },
+            "Objetos": { sust: ["mesa", "silla", "puerta", "casa", "libro", "pluma", "puente"], verbs: ["cae", "está", "rueda", "brilla", "abre", "cierra", "vibra"], adjs: ["grande", "pequeño", "rojo", "azul", "brillante"] },
+            "Fantasía": { sust: ["dragón", "unicornio", "duende", "bruja", "castillo", "barco", "cristal"], verbs: ["vuela", "encanta", "brilla", "se desliza", "desaparece", "ruge", "galopa"], adjs: ["mágico", "oscuro", "antiguo", "brillante", "gigante"] }
+        },
+        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzado": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 3, sym: 3 } }
     }
 };
 
@@ -240,13 +272,22 @@ const securityData = {
         { level: "Base", verb: "No", adj: "No", num: "1", sym: "1", entropy: "28", security: "1%", time: "~10 giorni" },
         { level: "Medio", verb: "Sì", adj: "No", num: "2", sym: "1", entropy: "45", security: "25%", time: "~2 anni" },
         { level: "Avanzato", verb: "Sì", adj: "Sì", num: "2", sym: "2", entropy: "60", security: "70%", time: "~123 anni" },
-        { level: "Ultra", verb: "Sì", adj: "Sì", num: "3", sym: "2", entropy: "72", security: "99%", time: "~123456 anni" }
+        { level: "Ultra", verb: "Sì", adj: "Sì", num: "3", sym: "2", entropy: "72", security: "99%", time: "~123456 anni" },
+        { level: "v.4", verb: "Sì", adj: "Sì", num: "3", sym: "3", entropy: "78", security: "99.9%", time: "~1 milione di anni" }
     ],
     en: [
         { level: "Base", verb: "No", adj: "No", num: "1", sym: "1", entropy: "28", security: "1%", time: "~10 days" },
         { level: "Medium", verb: "Yes", adj: "No", num: "2", sym: "1", entropy: "45", security: "25%", time: "~2 years" },
         { level: "Advanced", verb: "Yes", adj: "Yes", num: "2", sym: "2", entropy: "60", security: "70%", time: "~123 years" },
-        { level: "Ultra", verb: "Yes", adj: "Yes", num: "3", sym: "2", entropy: "72", security: "99%", time: "~123456 years" }
+        { level: "Ultra", verb: "Yes", adj: "Yes", num: "3", sym: "2", entropy: "72", security: "99%", time: "~123456 years" },
+        { level: "v.4", verb: "Yes", adj: "Yes", num: "3", sym: "3", entropy: "78", security: "99.9%", time: "~1 million years" }
+    ],
+    es: [
+        { level: "Base", verb: "No", adj: "No", num: "1", sym: "1", entropy: "28", security: "1%", time: "~10 días" },
+        { level: "Medio", verb: "Sí", adj: "No", num: "2", sym: "1", entropy: "45", security: "25%", time: "~2 años" },
+        { level: "Avanzado", verb: "Sí", adj: "Sí", num: "2", sym: "2", entropy: "60", security: "70%", time: "~123 años" },
+        { level: "Ultra", verb: "Sí", adj: "Sí", num: "3", sym: "2", entropy: "72", security: "99%", time: "~123456 años" },
+        { level: "v.4", verb: "Sí", adj: "Sí", num: "3", sym: "3", entropy: "78", security: "99.9%", time: "~1 millón de años" }
     ]
 };
 
