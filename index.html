@@ -7,7 +7,7 @@
     <title>Keyix - Password Generator</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="canonical" href="https://keyix.netlify.app/">
-    <meta name="description" content="Keyix è un generatore di password creative, sicure e facili da ricordare. Crea password uniche per proteggere i tuoi account e dati sensibili.">
+    <meta name="description" content="Keyix è il tuo alleato per la sicurezza online. Ti permette di creare facilmente password complesse e uniche, che sono anche facili da memorizzare. Con una guida dettagliata e un blog ricco di consigli, avrai tutti gli strumenti per proteggere i tuoi account in modo intelligente.">
     <style>
         body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
         #notification-banner { background-color: #28a745; color: white; padding: 10px; text-align: center; font-size: 0.9em; }
@@ -50,6 +50,7 @@
         .blog-post-content { text-align: left; }
         .blog-post-content img { max-width: 100%; height: auto; display: block; margin: 20px auto; border-radius: 8px; }
         .blog-post-content button { margin-top: 20px; }
+        .blog-title { margin-bottom: 20px; }
         
         /* ========================== Responsive mobile =========================== */
         @media (max-width:600px){
@@ -164,10 +165,12 @@
     
     <!-- Blog -->
     <div id="blog" class="page">
-        <h1 id="title-blog">Blog - Consigli per la sicurezza</h1>
-        <p id="blog-description">
-            I contenuti del blog vengono caricati direttamente da questo file, senza collegamenti esterni. Per aggiungere un nuovo articolo, basta inserirlo nel codice JavaScript qui sotto.
-        </p>
+        <div class="blog-title">
+            <h1 id="title-blog">Blog - Consigli per la sicurezza</h1>
+            <p id="blog-description">
+                I contenuti del blog vengono caricati direttamente da questo file, senza collegamenti esterni. Per aggiungere un nuovo articolo, basta inserirlo nel codice JavaScript qui sotto.
+            </p>
+        </div>
         <!-- Lista dei post -->
         <div id="blog-list-container">
             <ul id="blog-list" class="blog-list"></ul>
@@ -345,6 +348,50 @@ const data = {
                 }
             ]
         },
+        articles: ["The", "A"],
+        categories: {
+            "Animals": { sust: ["dog", "cat", "wolf", "horse", "mouse", "rabbit", "bird"], verbs: ["runs", "jumps", "sleeps", "meows", "barks", "flies"], adjs: ["big", "small", "fast", "slow", "bright"] },
+            "Nature": { sust: ["sea", "river", "moon", "sun", "tree", "flower", "sky"], verbs: ["flows", "shines", "flies", "grows", "falls", "waves"], adjs: ["big", "small", "bright", "dark", "high"] },
+            "Objects": { sust: ["table", "chair", "door", "house", "book", "pen", "bridge"], verbs: ["falls", "stands", "rolls", "shines", "opens", "closes", "vibrates"], adjs: ["big", "small", "red", "blue", "bright"] },
+            "Fantasy": { sust: ["dragon", "unicorn", "sprite", "witch", "castle", "ship", "crystal"], verbs: ["flies", "enchants", "shines", "slides", "disappears", "roars", "gallops"], adjs: ["magic", "dark", "ancient", "bright", "giant"] }
+        },
+        levels: { "Base": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzato": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 4, sym: 2 } }
+    },
+    es: {
+        ui: {
+            home: "Keyix - Generador de Contraseñas Creativas", info: "Niveles de seguridad", why: "¿Por qué usar contraseñas complejas?", guide: "Guía de uso", blog: "Blog - Consejos de seguridad",
+            navHome: "Inicio", navInfo: "Info", navWhy: "Por qué es útil", navGuide: "Guía", navBlog: "Blog",
+            labelLevel: "Seleccionar nivel:", labelCategory: "Seleccionar categoría:",
+            btnGenerate: "Generar", btnCopy: "📋 Copiar", btnRandom: "🔄 Aleatorio",
+            notificationText: "Keyix no guarda ninguna de las contraseñas generadas. Revisa el ", notificationLink: "código fuente en GitHub.",
+            footerLinksTitle: "Enlaces útiles", footerGithub: "Código Fuente (GitHub)",
+            whyList: ["Más difícil de adivinar para los hackers", "Protege contra ataques de fuerza bruta y de diccionario", "Reduce el riesgo de robo de datos y cuentas comprometidas", "Permite tener frases memorables pero seguras", "Evita la reutilización de contraseñas en varios sitios", "Protege correos electrónicos, redes sociales, cuentas bancarias y datos sensibles", "Reduce el riesgo de efecto dominó si un sitio es hackeado", "Keyix **NO almacena** ninguna contraseña generada: todo se queda en tu ordenador/navegador"],
+            guideContent: [
+                { type: 'h2', text: '¿Cuándo usar Keyix?' },
+                { type: 'p', text: 'Usa Keyix cada vez que necesites crear una nueva contraseña para una cuenta en línea, como redes sociales, correo electrónico, banca en línea o cualquier otro servicio. El objetivo es tener una contraseña única y robusta para cada sitio.' },
+                { type: 'h2', text: '¿Cómo elegir el nivel correcto?' },
+                { type: 'p', text: '<strong>Básico:</strong> Rápido y fácil de recordar, adecuado para sitios de bajo riesgo (por ejemplo, foros, blogs). Es mejor que una contraseña común, pero no la uses para cuentas importantes.' },
+                { type: 'p', text: '<strong>Medio:</strong> Un buen equilibrio entre seguridad y facilidad de recordar. Ideal para la mayoría de las cuentas de uso diario, como redes sociales o servicios de streaming.' },
+                { type: 'p', text: '<strong>Avanzado:</strong> Muy seguro. Úsalo para cuentas críticas que contengan datos sensibles, como tu cuenta de correo electrónico principal, gestores de contraseñas o cuentas financieras.' },
+                { type: 'p', text: '<strong>Ultra:</strong> Máxima seguridad. Perfecto para cuentas que requieren el nivel más alto de protección, como carteras de criptomonedas o cuentas con privilegios de administrador.' },
+                { type: 'p', text: '<strong>v.4:</strong> Una nueva versión aún más segura, diseñada para profesionales de la seguridad y para proteger datos de extrema importancia.' }
+            ],
+            blogDescription: "El contenido del blog se carga directamente desde este archivo, sin enlaces externos. Para agregar un nuevo artículo, simplemente insértalo en el código JavaScript.",
+            blog: [
+                {
+                    title: "¿Por qué usar una contraseña única para cada sitio?",
+                    date: "16 de Septiembre de 2025",
+                    intro: "Mucha gente usa la misma contraseña para varias cuentas por conveniencia. Pero este hábito es extremadamente peligroso...",
+                    content: "<span><p>Mucha gente usa la misma contraseña para varias cuentas por conveniencia. Sin embargo, este hábito es extremadamente peligroso y te expone a enormes riesgos.</p> <p>Si una de las plataformas que utilizas sufre una brecha de datos, los ciberdelincuentes obtienen tu contraseña. Y si esta contraseña es la misma que usas para tu correo electrónico, tus redes sociales o tus cuentas bancarias, corres el riesgo de que todas tus cuentas se vean comprometidas en un abrir y cerrar de ojos. Esto se conoce como 'ataque en cascada'.</p> <p>El uso de contraseñas únicas para cada servicio te protege de este riesgo. Incluso si un sitio es vulnerado, solo esa cuenta está en riesgo, mientras que todas las demás permanecen seguras. Keyix te ayuda a crear contraseñas únicas que no olvidarás.</p></span>"
+                },
+                {
+                    title: "¿Cómo funciona la fuerza de las contraseñas?",
+                    date: "10 de Septiembre de 2025",
+                    intro: "La seguridad de una contraseña no solo depende de su longitud, sino de su complejidad y singularidad...",
+                    content: "<span><p>La seguridad de una contraseña no solo depende de su longitud, sino de su complejidad y singularidad. La fuerza de una contraseña se mide en 'entropía', expresada en bits. Cuantos más bits tenga una contraseña, más tiempo y poder de cálculo necesitará un hacker para descifrarla.</p> <p>Las contraseñas creativas de Keyix, con su combinación de frases, números y símbolos, aumentan notablemente la entropía en comparación con una contraseña aleatoria o una palabra del diccionario. Esto las hace mucho más resistentes a los ataques de fuerza bruta y garantiza una protección superior para tus datos.</p> <p>La clave es la imprevisibilidad. Al usar una frase, haces que la contraseña sea más fácil de recordar para ti, pero su combinación con elementos aleatorios la hace casi imposible de adivinar para un ordenador.</p></span>"
+                }
+            ]
+        },
         articles: ["El", "Un", "La", "Una", "Los", "Las"],
         categories: {
             "Animales": { sust: ["perro", "gato", "lobo", "caballo", "ratón", "conejo", "pájaro"], verbs: ["corre", "salta", "duerme", "maúlla", "ladra", "vuela"], adjs: ["grande", "pequeño", "rápido", "lento", "brillante"] },
@@ -352,9 +399,9 @@ const data = {
             "Objetos": { sust: ["mesa", "silla", "puerta", "casa", "libro", "pluma", "puente"], verbs: ["cae", "está", "rueda", "brilla", "abre", "cierra", "vibra"], adjs: ["grande", "pequeño", "rojo", "azul", "brillante"] },
             "Fantasía": { sust: ["dragón", "unicornio", "duende", "bruja", "castillo", "barco", "cristal"], verbs: ["vuela", "encanta", "brilla", "se desliza", "desaparece", "ruge", "galopa"], adjs: ["mágico", "oscuro", "antiguo", "brillante", "gigante"] }
         },
-        levels: { "Básico": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzado": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 4, sym: 2 } }
+        levels: { "Básico": { verb: false, adj: false, num: 1, sym: 1 }, "Medio": { verb: true, adj: false, num: 2, sym: 1 }, "Avanzato": { verb: true, adj: true, num: 2, sym: 2 }, "Ultra": { verb: true, adj: true, num: 3, sym: 2 }, "v.4": { verb: true, adj: true, num: 4, sym: 2 } }
     }
-};
+}
 
 const levelSelect = document.getElementById("level");
 const categorySelect = document.getElementById("category");
